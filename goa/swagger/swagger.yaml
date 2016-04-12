@@ -1,0 +1,47 @@
+consumes:
+- application/json
+- application/xml
+- application/gob
+- application/x-gob
+definitions:
+  CreateTasksPayload:
+    properties:
+      text:
+        description: task text
+        type: string
+    title: CreateTasksPayload
+    type: object
+host: localhost:3000
+info:
+  description: Example API for tasks
+  title: Tasks API
+  version: ""
+paths:
+  /tasks:
+    get:
+      description: Show all tasks
+      operationId: tasks#index
+      responses:
+        "200":
+          description: OK
+      schemes:
+      - http
+    post:
+      description: Create new task
+      operationId: tasks#create
+      parameters:
+      - in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/CreateTasksPayload'
+      schemes:
+      - http
+produces:
+- application/json
+- application/xml
+- application/gob
+- application/x-gob
+schemes:
+- http
+swagger: "2.0"
