@@ -11,6 +11,16 @@ definitions:
         type: string
     title: CreateTasksPayload
     type: object
+  UpdateTasksPayload:
+    properties:
+      complete:
+        description: task completion
+        type: boolean
+      text:
+        description: task text
+        type: string
+    title: UpdateTasksPayload
+    type: object
 host: localhost:3000
 info:
   description: Example API for tasks
@@ -19,7 +29,7 @@ info:
 paths:
   /tasks:
     get:
-      description: Show all tasks
+      description: Shows all tasks
       operationId: tasks#index
       responses:
         "200":
@@ -27,7 +37,7 @@ paths:
       schemes:
       - http
     post:
-      description: Create new task
+      description: Creates new task
       operationId: tasks#create
       parameters:
       - in: body
@@ -35,6 +45,48 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/CreateTasksPayload'
+      schemes:
+      - http
+  /tasks/{id}:
+    delete:
+      description: Deletes some task
+      operationId: tasks#delete
+      parameters:
+      - description: ID of the task
+        in: path
+        name: id
+        required: true
+        type: integer
+      schemes:
+      - http
+    get:
+      description: Shows the task
+      operationId: tasks#get
+      parameters:
+      - description: ID of the task
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+      schemes:
+      - http
+    put:
+      description: Updates some task
+      operationId: tasks#update
+      parameters:
+      - description: ID of the task
+        in: path
+        name: id
+        required: true
+        type: integer
+      - in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/UpdateTasksPayload'
       schemes:
       - http
 produces:

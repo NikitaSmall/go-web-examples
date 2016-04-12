@@ -36,7 +36,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	var command, sub *cobra.Command
 	command = &cobra.Command{
 		Use:   "create",
-		Short: `Create new task`,
+		Short: `Creates new task`,
 	}
 	tmp1 := new(CreateTasksCommand)
 	sub = &cobra.Command{
@@ -48,16 +48,55 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
-		Use:   "index",
-		Short: `Show all tasks`,
+		Use:   "delete",
+		Short: `Deletes some task`,
 	}
-	tmp2 := new(IndexTasksCommand)
+	tmp2 := new(DeleteTasksCommand)
 	sub = &cobra.Command{
-		Use:   `tasks "/tasks"`,
+		Use:   `tasks "/tasks/:id"`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp2.Run(c, args) },
 	}
 	tmp2.RegisterFlags(sub)
+	command.AddCommand(sub)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "get",
+		Short: `Shows the task`,
+	}
+	tmp3 := new(GetTasksCommand)
+	sub = &cobra.Command{
+		Use:   `tasks "/tasks/:id"`,
+		Short: ``,
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp3.Run(c, args) },
+	}
+	tmp3.RegisterFlags(sub)
+	command.AddCommand(sub)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "index",
+		Short: `Shows all tasks`,
+	}
+	tmp4 := new(IndexTasksCommand)
+	sub = &cobra.Command{
+		Use:   `tasks "/tasks"`,
+		Short: ``,
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp4.Run(c, args) },
+	}
+	tmp4.RegisterFlags(sub)
+	command.AddCommand(sub)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "update",
+		Short: `Updates some task`,
+	}
+	tmp5 := new(UpdateTasksCommand)
+	sub = &cobra.Command{
+		Use:   `tasks "/tasks/:id"`,
+		Short: ``,
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp5.Run(c, args) },
+	}
+	tmp5.RegisterFlags(sub)
 	command.AddCommand(sub)
 	app.AddCommand(command)
 
